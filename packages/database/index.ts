@@ -3,6 +3,8 @@ import { neon } from '@neondatabase/serverless';
 import { drizzle } from 'drizzle-orm/neon-http';
 import { keys } from './keys';
 
+//TODO deprecated
+
 // import ws from 'ws';
 // neonConfig.webSocketConstructor = ws;
 
