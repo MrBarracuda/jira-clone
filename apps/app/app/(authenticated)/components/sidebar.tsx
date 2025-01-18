@@ -34,7 +34,6 @@ import {
   useSidebar,
 } from '@repo/design-system/components/ui/sidebar';
 import { cn } from '@repo/design-system/lib/utils';
-import { NotificationsTrigger } from '@repo/notifications/components/trigger';
 import {
   AnchorIcon,
   BookOpenIcon,
@@ -342,11 +341,7 @@ export const GlobalSidebar = ({ children }: GlobalSidebarProperties) => {
                   size="icon"
                   className="shrink-0"
                   asChild
-                >
-                  <div className="h-4 w-4">
-                    <NotificationsTrigger />
-                  </div>
-                </Button>
+                ></Button>
               </div>
             </SidebarMenuItem>
           </SidebarMenu>
