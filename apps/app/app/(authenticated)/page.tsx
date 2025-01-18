@@ -1,6 +1,7 @@
 import { env } from '@/env';
 import { auth } from '@repo/auth/server';
 import { database } from '@repo/database';
+import { pageTable } from '@repo/database/drizzle/schema';
 import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import { notFound } from 'next/navigation';
@@ -23,7 +24,7 @@ export const metadata: Metadata = {
 };
 
 const App = async () => {
-  const pages = await database.page.findMany();
+  const pages = await database.select().from(pageTable);
   const { orgId } = await auth();
 
   if (!orgId) {

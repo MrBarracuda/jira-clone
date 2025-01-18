@@ -4,18 +4,15 @@
   "main": "./index.ts",
   "types": "./index.ts",
   "scripts": {
-    "analyze": "prisma generate --no-hints",
-    "build": "prisma generate --no-hints",
     "clean": "git clean -xdf .cache .turbo dist node_modules",
     "typecheck": "tsc --noEmit --emitDeclarationOnly false"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",
-    "@prisma/adapter-neon": "^6.2.1",
-    "@prisma/client": "6.2.1",
     "@t3-oss/env-nextjs": "^0.11.1",
+    "drizzle-orm": "^0.38.4",
     "server-only": "^0.0.1",
-    "undici": "^7.2.2",
+    "undici": "^7.2.3",
     "ws": "^8.18.0",
     "zod": "^3.24.1"
   },
@@ -24,7 +21,7 @@
     "@types/node": "22.10.7",
     "@types/ws": "^8.5.13",
     "bufferutil": "^4.0.9",
-    "prisma": "6.2.1",
+    "drizzle-kit": "^0.30.2",
     "typescript": "^5.7.3"
   }
 }
