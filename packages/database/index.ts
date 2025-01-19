@@ -1,16 +1,12 @@
 import 'server-only';
 
-import { Pool, neonConfig } from '@neondatabase/serverless';
-import { PrismaNeon } from '@prisma/adapter-neon';
 import { PrismaClient } from '@prisma/client';
-import ws from 'ws';
+import { withAccelerate } from '@prisma/extension-accelerate';
+import { withPulse } from '@prisma/extension-pulse';
 import { keys } from './keys';
 
-neonConfig.webSocketConstructor = ws;
-
-const pool = new Pool({ connectionString: keys().DATABASE_URL });
-const adapter = new PrismaNeon(pool);
-
-export const database = new PrismaClient({ adapter });
+export const database = new PrismaClient()
+  .$extends(withAccelerate())
+  .$extends(withPulse({ apiKey: keys().PULSE_API_KEY }));
 
 export * from '@prisma/client';

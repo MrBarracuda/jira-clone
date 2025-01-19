@@ -4,9 +4,11 @@ import { z } from 'zod';
 export const keys = () =>
   createEnv({
     server: {
-      DATABASE_URL: z.string().min(1).url(),
+      DATABASE_URL: z.string().min(1).startsWith('ey'),
+      PULSE_API_KEY: z.string().min(1).startsWith('ey'),
     },
     runtimeEnv: {
       DATABASE_URL: process.env.DATABASE_URL,
+      PULSE_API_KEY: process.env.PULSE_API_KEY,
     },
   });
