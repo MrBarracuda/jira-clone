@@ -7,14 +7,95 @@ generator client {
 }
 
 datasource db {
-  provider     = "postgresql"
-  url          = env("DATABASE_URL")
-  relationMode = "prisma"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  // relationMode = "prisma"
 }
 
 // This is a stub model.
 // Delete it and add your own Prisma models.
 model Page {
-  id   Int    @id @default(autoincrement())
-  name String
+  id    Int     @id @default(autoincrement())
+  name  String? @db.VarChar(255)
+  email String  @unique @db.VarChar(255)
+}
+
+enum ProjectStatus {
+  Active
+  Archived
+}
+
+enum IssueStatus {
+  Backlog
+  Todo
+  InProgress
+  Done
+  Cancelled
+}
+
+enum Priority {
+  NoPriority
+  Low
+  Medium
+  High
+  Critical
+}
+
+enum Type {
+  Bug
+  Feature
+  Improvement
+  Task
+}
+
+enum Role {
+  Admin
+  Member
+  Viewer
+}
+
+model User {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique @db.VarChar(50)
+  email        String   @unique @db.VarChar(100)
+  passwordHash String   @db.VarChar(255)
+  image        String?  @db.VarChar(255)
+  role         Role     @default(Member)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now())
+  issues       Issue[]
+}
+
+model Team {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique @db.VarChar(100)
+  description String?
+  createdAt   DateTime  @default(now())
+  projects    Project[]
+}
+
+model Project {
+  id          Int           @id @default(autoincrement())
+  teamId      Int
+  name        String        @db.VarChar(100)
+  description String?
+  status      ProjectStatus @default(Active)
+  createdAt   DateTime      @default(now())
+  team        Team          @relation(fields: [teamId], references: [id])
+  issues      Issue[]
+}
+
+model Issue {
+  id          Int         @id @default(autoincrement())
+  projectId   Int
+  assignedTo  Int?
+  title       String      @db.VarChar(150)
+  description String?
+  status      IssueStatus @default(Backlog)
+  priority    Priority    @default(Medium)
+  type        Type
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @default(now())
+  project     Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  assignee    User?       @relation(fields: [assignedTo], references: [id], onDelete: SetNull)
 }
