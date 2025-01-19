@@ -41,7 +41,7 @@ export const pageTable = pgTable('page', {
 });
 
 export const usersTable = pgTable('users', {
-  id: uuid().primaryKey().defaultRandom(),
+	id: integer().primaryKey().generatedAlwaysAsIdentity(),
   username: varchar({ length: 50 }).notNull().unique(),
   email: varchar({ length: 100 }).notNull().unique(),
   passwordHash: varchar({ length: 255 }).notNull(),
